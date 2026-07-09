@@ -7,24 +7,22 @@ export class WeatherController {
 
   @Get()
   async get(
-    @Query('city') city: string,
+    @Query('city') city?: string,
     @Query('lat') lat?: number,
     @Query('lng') lng?: number,
   ) {
-    const key = city || 'beijing';
-    const weather = await this.weatherService.getWeather(0, key, lat != null ? +lat : undefined, lng != null ? +lng : undefined);
+    const hasCoords = lat != null && lng != null;
+    const weather = await this.weatherService.getWeather(
+      0,
+      city || 'beijing',
+      hasCoords ? +lat! : undefined,
+      hasCoords ? +lng! : undefined,
+    );
     const reminder = await this.weatherService.generateReminder(weather);
-    return { weather, reminder };
-  }
-
-  @Get('reminder')
-  async reminder(
-    @Query('city') city: string,
-    @Query('lat') lat?: number,
-    @Query('lng') lng?: number,
-  ) {
-    const key = city || 'beijing';
-    const weather = await this.weatherService.getWeather(0, key, lat != null ? +lat : undefined, lng != null ? +lng : undefined);
-    return { reminder: await this.weatherService.generateReminder(weather) };
+    // 附加城市名到响应中
+    return {
+      weather: { ...weather, _city: weather.now?.city || city || '当前位置' },
+      reminder,
+    };
   }
 }

@@ -17,7 +17,7 @@ class _ButlerScreenState extends State<ButlerScreen> {
   final _messages = <_ChatMessage>[
     const _ChatMessage(
       role: 'assistant',
-      content: '你好呀，我是暖暖。想聊恋爱、相处、安慰话术，都可以直接问我。',
+      content: '喵～我是小柒，一只会保护你的蠢萌小猫🐱 虽然偶尔犯傻，但一定会好好照顾你！有什么想聊的都可以跟我说喵～',
     ),
   ];
   final _inputCtrl = TextEditingController();
@@ -125,9 +125,9 @@ class _ButlerScreenState extends State<ButlerScreen> {
         child: Column(
           children: [
             const AppGradientHeader(
-              title: 'AI 恋爱管家',
-              subtitle: '随问随答 · 你的专属恋爱军师',
-              icon: 'AI',
+              title: '小柒の窝',
+              subtitle: '喵呜，小柒翘起尾巴在等你和本咪邂逅哦',
+              icon: '🐱',
             ),
             Expanded(
               child: ListView.builder(
@@ -158,7 +158,7 @@ class _ButlerScreenState extends State<ButlerScreen> {
                       minLines: 1,
                       maxLines: 4,
                       decoration: const InputDecoration(
-                        hintText: '和暖暖聊聊...',
+                        hintText: '和小柒聊聊...',
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 12,
@@ -237,7 +237,7 @@ class _ButlerScreenState extends State<ButlerScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              isMe ? '我' : '暖暖',
+              isMe ? '我' : '小柒',
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,

@@ -19,7 +19,7 @@ export class AlbumController {
   /** Multipart 文件上传 */
   @Post(':id/photos/upload')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 10 * 1024 * 1024 } }))
-  async uploadFile(@CurrentUser() u: any, @Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@CurrentUser() u: any, @Param('id') id: number, @UploadedFile() file: any) {
     if (!file) return { error: '请选择文件' };
     return this.albumService.uploadPhotoFile(id, u.sub, file);
   }

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WeatherCache } from '../../database/entities/weather-cache.entity';
+import { AiProvider } from '../../providers/ai/ai.provider';
 import axios from 'axios';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class WeatherService {
   constructor(
     private config: ConfigService,
     @InjectRepository(WeatherCache) private cacheRepo: Repository<WeatherCache>,
+    private aiProvider: AiProvider,
   ) {}
 
   async getWeather(roomId: number, city: string, lat?: number, lng?: number): Promise<any> {
@@ -149,8 +151,27 @@ export class WeatherService {
   async generateReminder(weather: any): Promise<string> {
     const today = weather?.daily?.[0] || weather?.now;
     if (!today) return '今天天气不错，适合约会哦💝';
+
     const temp = parseInt(today.tempMax || today.temp || '25');
     const text = today.textDay || today.text || '';
+    const wind = weather?.now?.windDir || '';
+    const humidity = weather?.now?.humidity || '';
+    const feelsLike = weather?.now?.feelsLike || temp.toString();
+
+    // 拼装天气上下文给 AI
+    const weatherDesc = `${text}，气温${temp}°C，体感${feelsLike}°C，湿度${humidity}%，${wind}风`;
+
+    try {
+      const reply = await this.aiProvider.chat([
+        { role: 'user', content: `今日天气预报：${weatherDesc}\n\n你是一只叫小柒的蠢萌小猫咪，很会保护人。请用猫的口吻给一句20字以内的天气提醒，带1个emoji+喵结尾。比如"带伞🌂不然淋湿喵"、"防晒☀️本喵提醒你喵"这种。只说提醒本身。` },
+      ]);
+      return reply?.trim() || this.buildFallbackReminder(temp, text);
+    } catch (_) {
+      return this.buildFallbackReminder(temp, text);
+    }
+  }
+
+  private buildFallbackReminder(temp: number, text: string): string {
     const r: string[] = [];
     if (text.includes('雨')) r.push('记得带伞🌂');
     if (temp < 10) r.push('穿厚外套🧥');

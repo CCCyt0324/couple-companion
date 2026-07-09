@@ -65,6 +65,14 @@ class _MoodScreenState extends ConsumerState<MoodScreen> {
             Expanded(child: _CompareBar(label: '我', value: _value.toInt())), const SizedBox(width: 12),
             Expanded(child: _CompareBar(label: 'TA', value: partner.moodValue)),
           ]),
+          if (partner.note != null && partner.note!.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.white.withAlpha(120), borderRadius: BorderRadius.circular(12)),
+              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text('💬', style: TextStyle(fontSize: 16)), const SizedBox(width: 8),
+                Expanded(child: Text(partner.note!, style: const TextStyle(color: AppTheme.textDark, fontSize: 14))),
+              ])),
+          ],
         ]))),
         const SizedBox(height: 16),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child: AppCard(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -56,7 +56,7 @@ export class AlbumService {
   }
 
   /** 通过 multipart 文件上传（推荐） */
-  async uploadPhotoFile(albumId: number, userId: number, file: Express.Multer.File): Promise<Photo> {
+  async uploadPhotoFile(albumId: number, userId: number, file: any): Promise<Photo> {
     const allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!allowedMimes.includes(file.mimetype)) throw new BadRequestException('仅支持 JPG/PNG/GIF/WebP 格式');
 

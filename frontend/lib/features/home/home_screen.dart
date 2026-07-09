@@ -115,7 +115,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               if (dailyList.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AppCard(color: AppTheme.sky, child: Column(children: [
+                  child: AppCard(color: AppTheme.sky,
+                    onTap: () => context.go('/weather'),
+                    child: Column(children: [
                     Row(children: [
                       Text('${weather['now']?['temp'] ?? '--'}°', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w800)),
                       const SizedBox(width: 8),
@@ -126,6 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     if (_data['reminder'] != null && _data['reminder'].toString().isNotEmpty)
                       Padding(padding: const EdgeInsets.only(top: 6), child: Text('💡 ${_data['reminder']}', style: const TextStyle(fontSize: 13))),
                   ])),
+
                 ),
               const SizedBox(height: 12),
 

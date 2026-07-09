@@ -26,7 +26,7 @@ export class AiProvider {
       return res.data.choices[0].message.content;
     } catch (err: any) {
       this.logger.error(`AI 对话失败: ${err.message}`);
-      return '喵～暹暹刚才走神了，能再说一遍吗？😺';
+      return '喵～小柒刚才走神了，能再说一遍吗？😺';
     }
   }
 

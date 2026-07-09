@@ -1,0 +1,35 @@
+{
+    "name": "情侣小宇宙",
+    "short_name": "情侣小宇宙",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#FFF5F7",
+    "theme_color": "#FF8FB1",
+    "description": "情侣陪伴互动小程序 — 记录每一天的甜蜜",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

@@ -21,6 +21,9 @@ class ApiService {
           if (_token != null && _token!.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $_token';
           }
+          if (_userId != null) {
+            options.headers['x-user-id'] = _userId.toString();
+          }
           handler.next(options);
         },
       ),
@@ -29,16 +32,25 @@ class ApiService {
 
   late final Dio _dio;
   String? _token;
+  int? _userId;
+
+  Dio get dio => _dio;
+  int? get userId => _userId;
 
   Future<void> loadToken() async {
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');
+    _userId = prefs.getInt('user_id');
   }
 
   Future<void> saveToken(String token) async {
     _token = token;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
+  }
+
+  void setUserId(int id) {
+    _userId = id;
   }
 
   Future<void> clearToken() async {

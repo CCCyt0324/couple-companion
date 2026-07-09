@@ -12,13 +12,14 @@ async function bootstrap() {
 
   app.enableCors({ origin: true, credentials: true });
 
-  // 静态文件——托管 Flutter Web 构建产物
+  // 静态文件——托管 Flutter Web 构建产物 + 上传文件
   const wwwRoot = join(__dirname, '..', 'www');
   app.use(express.static(wwwRoot));
+  app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
-  // SPA 路由回退：非 /api 请求都返回 index.html
+  // SPA 路由回退：非 /api /uploads /socket.io 请求都返回 index.html
   app.use((req: any, res: any, next: any) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io') || req.path.startsWith('/uploads')) {
       return next();
     }
     res.sendFile(join(wwwRoot, 'index.html'));

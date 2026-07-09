@@ -1,11 +1,11 @@
 import { Controller, Get, Put, Body, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { GreetingService } from './greeting.service';
 import { RoomService } from '../room/room.service';
 
 @Controller('greeting')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class GreetingController {
   constructor(
     private greetingService: GreetingService,

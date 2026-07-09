@@ -8,7 +8,6 @@ import '../../features/games/game_hub_screen.dart';
 import '../../features/games/game_room_screen.dart';
 import '../../features/habit/habit_screen.dart';
 import '../../features/home/home_screen.dart';
-import '../../features/map/map_screen.dart';
 import '../../features/mood/mood_screen.dart';
 import '../../features/more/more_screen.dart';
 import '../../features/period/period_screen.dart';
@@ -41,7 +40,6 @@ final appRouterProvider = Provider<GoRouter>((ref) => GoRouter(
     GoRoute(path: '/status', builder: (_, __) => const StatusScreen()),
     GoRoute(path: '/games', builder: (_, __) => const GameHubScreen()),
     GoRoute(path: '/games/room/:id', builder: (_, state) => GameRoomScreen(roomId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0)),
-    GoRoute(path: '/map', builder: (_, __) => const MapScreen()),
     GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
     GoRoute(path: '/habits', builder: (_, __) => const HabitScreen()),
     GoRoute(path: '/todos', builder: (_, __) => const TodoScreen()),

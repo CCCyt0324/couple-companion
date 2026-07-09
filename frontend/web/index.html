@@ -4,26 +4,76 @@
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="情侣陪伴互动小程序 — 记录每一天的甜蜜">
 
-  <!-- PWA -->
-  <meta name="mobile-web-app-capable" content="yes">
+  <!-- 移动端 viewport：禁用缩放，适配安全区域 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+  <meta name="description" content="情侣陪伴互动 — 记录每一天的甜蜜">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="情侣小宇宙">
-  <meta name="theme-color" content="#FF8FB1">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#F66E87">
+  <meta name="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/Icon-192.png">
+
+  <!-- iOS 启动画面 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-startup-image" href="icons/Icon-512.png">
 
   <title>情侣小宇宙</title>
   <link rel="manifest" href="manifest.json">
 
   <style>
-    body { margin: 0; padding: 0; background: #FFF5F7; }
-    #loading { display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; color: #FF8FB1; font-size: 18px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      background: #F66E87;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    #loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #FFB9C7, #F66E87);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      color: white;
+      text-align: center;
+    }
+    #loading .icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    #loading .title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    #loading .subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
   </style>
 </head>
 <body>
-  <div id="loading">💝 加载中...</div>
+  <div id="loading">
+    <div class="icon">💝</div>
+    <div class="title">情侣小宇宙</div>
+    <div class="subtitle">正在加载...</div>
+  </div>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

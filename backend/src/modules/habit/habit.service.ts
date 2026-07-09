@@ -10,8 +10,15 @@ export class HabitService {
     @InjectRepository(HabitLog) private logRepo: Repository<HabitLog>,
   ) {}
 
-  async list(roomId: number): Promise<Habit[]> {
-    return this.habitRepo.find({ where: { roomId }, order: { sortOrder: 'ASC' } });
+  async list(roomId: number): Promise<any[]> {
+    const habits = await this.habitRepo.find({ where: { roomId }, order: { sortOrder: 'ASC' } });
+    const today = new Date().toISOString().slice(0, 10);
+    const logs = await this.logRepo.find({ where: { date: today } });
+    return habits.map((h) => ({
+      ...h,
+      todayDone: logs.some((l) => l.habitId === h.id && l.completed),
+      todayDoneBy: (logs.find((l) => l.habitId === h.id && l.completed))?.userId ?? null,
+    }));
   }
 
   async create(roomId: number, name: string, icon: string): Promise<Habit> {

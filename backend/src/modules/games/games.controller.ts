@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { GamesService } from './games.service';
 import { RoomService } from '../room/room.service';
 
 @Controller('games')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class GamesController {
   constructor(private gamesService: GamesService, private roomService: RoomService) {}
 

@@ -18,7 +18,6 @@ import { AnniversaryModule } from './modules/anniversary/anniversary.module';
 import { AlbumModule } from './modules/album/album.module';
 import { WishModule } from './modules/wish/wish.module';
 import { GamesModule } from './modules/games/games.module';
-import { MapModule } from './modules/map/map.module';
 import { MoodModule } from './modules/mood/mood.module';
 import { OssProvider } from './providers/oss/oss.provider';
 import { PushProvider } from './providers/push/push.provider';
@@ -40,7 +39,7 @@ import { AiProvider } from './providers/ai/ai.provider';
       }),
     }),
     AuthModule, UserModule, RoomModule, GreetingModule, WeatherModule, PeriodModule, ButlerModule,
-    HabitModule, TodoModule, StatusModule, AnniversaryModule, AlbumModule, WishModule, GamesModule, MapModule, MoodModule,
+    HabitModule, TodoModule, StatusModule, AnniversaryModule, AlbumModule, WishModule, GamesModule, MoodModule,
   ],
   providers: [OssProvider, PushProvider, AiProvider],
   exports: [OssProvider, PushProvider, AiProvider],

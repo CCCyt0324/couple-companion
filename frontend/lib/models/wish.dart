@@ -1,7 +1,7 @@
 class WishNote {
   WishNote({
     required this.id,
-    required this.coupleId,
+    required this.roomId,
     required this.fromUserId,
     required this.content,
     required this.type,
@@ -11,7 +11,7 @@ class WishNote {
   });
 
   final int id;
-  final int coupleId;
+  final int roomId;
   final int fromUserId;
   final String content;
   final String type;
@@ -21,7 +21,7 @@ class WishNote {
 
   factory WishNote.fromJson(Map<String, dynamic> json) => WishNote(
         id: json['id'] as int? ?? 0,
-        coupleId: json['coupleId'] as int? ?? 0,
+        roomId: json['roomId'] as int? ?? 0,
         fromUserId: json['fromUserId'] as int? ?? 0,
         content: json['content'] as String? ?? '',
         type: json['type'] as String? ?? '',

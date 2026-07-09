@@ -43,10 +43,10 @@ class MockData {
   );
 
   static final habits = <Habit>[
-    Habit(id: 1, coupleId: 1, name: '一起喝水', icon: '💧', sortOrder: 0),
-    Habit(id: 2, coupleId: 1, name: '晚安打卡', icon: '🌙', sortOrder: 1),
-    Habit(id: 3, coupleId: 1, name: '夸夸对方', icon: '🌷', sortOrder: 2),
-    Habit(id: 4, coupleId: 1, name: '同步日程', icon: '🗓', sortOrder: 3),
+    Habit(id: 1, roomId: 1, name: '一起喝水', icon: '💧', sortOrder: 0),
+    Habit(id: 2, roomId: 1, name: '晚安打卡', icon: '🌙', sortOrder: 1),
+    Habit(id: 3, roomId: 1, name: '夸夸对方', icon: '🌷', sortOrder: 2),
+    Habit(id: 4, roomId: 1, name: '同步日程', icon: '🗓', sortOrder: 3),
   ];
 
   static final habitStats = HabitStats(total: 4, completed: 3);
@@ -87,7 +87,7 @@ class MockData {
   static final whispers = <WishNote>[
     WishNote(
       id: 1,
-      coupleId: 1,
+      roomId: 1,
       fromUserId: 2,
       content: '下次见面想抱你久一点。',
       type: 'whisper',
@@ -97,7 +97,7 @@ class MockData {
     ),
     WishNote(
       id: 2,
-      coupleId: 1,
+      roomId: 1,
       fromUserId: 1,
       content: '其实我今天一直在想你。',
       type: 'whisper',
@@ -110,7 +110,7 @@ class MockData {
   static final wishes = <WishNote>[
     WishNote(
       id: 3,
-      coupleId: 1,
+      roomId: 1,
       fromUserId: 1,
       content: '秋天一起去看海。',
       type: 'wish',
@@ -120,7 +120,7 @@ class MockData {
     ),
     WishNote(
       id: 4,
-      coupleId: 1,
+      roomId: 1,
       fromUserId: 2,
       content: '把我们每个月的合照都洗出来。',
       type: 'wish',

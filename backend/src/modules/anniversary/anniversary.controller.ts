@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AnniversaryService } from './anniversary.service';
 import { RoomService } from '../room/room.service';
 
 @Controller('anniversary')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class AnniversaryController {
   constructor(
     private anniversaryService: AnniversaryService,

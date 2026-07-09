@@ -1,7 +1,9 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { Room, RoomMember } from '../../database/entities/room.entity';
+import { User } from '../../database/entities/user.entity';
 import { Habit } from '../../database/entities/habit.entity';
 import * as crypto from 'crypto';
 
@@ -11,30 +13,30 @@ export class RoomService {
     @InjectRepository(Room) private roomRepo: Repository<Room>,
     @InjectRepository(RoomMember) private memberRepo: Repository<RoomMember>,
     @InjectRepository(Habit) private habitRepo: Repository<Habit>,
+    @InjectRepository(User) private userRepo: Repository<User>,
     private dataSource: DataSource,
   ) {}
 
-  /** 用户注册时自动分配房间：生成了房码则返回，未提供则创建新房间 */
-  async setupRoom(userId: number, roomCode?: string, creatorName?: string): Promise<Room> {
-    if (roomCode) {
-      // 加入已有房间
-      const room = await this.roomRepo.findOne({ where: { code: roomCode } });
-      if (!room) throw new BadRequestException('房间码无效，请检查后重试');
-      await this.memberRepo.save(this.memberRepo.create({ roomId: room.id, userId }));
-      await this.initDefaultHabits(room.id);
-      return room;
-    }
-    // 创建新房间
+  /** 创建匿名用户 + 房间——前端首次启动时调用 */
+  async createAnonymousUserWithRoom(): Promise<{ userId: number; roomCode: string }> {
+    const nickname = '用户' + Math.random().toString(36).substring(2, 6);
+    const phone = 'anon_' + Date.now().toString(36);
+    const user = this.userRepo.create({
+      phone, nickname,
+      passwordHash: await bcrypt.hash(Math.random().toString(36), 10),
+    });
+    await this.userRepo.save(user);
+
     const code = await this.generateUniqueCode();
     const room = await this.roomRepo.save(this.roomRepo.create({
-      code, name: creatorName ? `${creatorName}的小窝` : '温馨小窝', creatorId: userId,
+      code, name: `${nickname}的小窝`, creatorId: user.id,
     }));
-    await this.memberRepo.save(this.memberRepo.create({ roomId: room.id, userId }));
+    await this.memberRepo.save(this.memberRepo.create({ roomId: room.id, userId: user.id }));
     await this.initDefaultHabits(room.id);
-    return room;
+
+    return { userId: user.id, roomCode: code };
   }
 
-  /** 获取用户当前房间 */
   async getUserRoom(userId: number): Promise<Room | null> {
     const member = await this.memberRepo.findOne({ where: { userId } });
     if (!member) return null;
@@ -46,16 +48,27 @@ export class RoomService {
     return member?.roomId ?? null;
   }
 
-  /** 获取房间内所有成员 */
   async getMembers(roomId: number): Promise<RoomMember[]> {
     return this.memberRepo.find({ where: { roomId } });
   }
 
-  /** 换房间 */
+  /** 退出当前房间，创建新房间 */
+  async leaveAndNewRoom(userId: number): Promise<{ room: Room; roomCode: string }> {
+    const user = await this.userRepo.findOne({ where: { id: userId } });
+    const nickname = user?.nickname || '用户';
+    // 退出旧房间
+    await this.memberRepo.delete({ userId });
+    // 创建新房间
+    const code = await this.generateUniqueCode();
+    const room = await this.roomRepo.save(this.roomRepo.create({ code, name: `${nickname}的小窝`, creatorId: userId }));
+    await this.memberRepo.save(this.memberRepo.create({ roomId: room.id, userId }));
+    await this.initDefaultHabits(room.id);
+    return { room, roomCode: code };
+  }
+
   async joinRoom(userId: number, roomCode: string): Promise<Room> {
     const room = await this.roomRepo.findOne({ where: { code: roomCode } });
     if (!room) throw new BadRequestException('房间码无效');
-    // 先退出现有房间
     await this.memberRepo.delete({ userId });
     await this.memberRepo.save(this.memberRepo.create({ roomId: room.id, userId }));
     await this.initDefaultHabits(room.id);

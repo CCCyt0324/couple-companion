@@ -1,15 +1,34 @@
+# ── 依赖 ──
 node_modules/
-dist/
-.env
-*.log
-.DS_Store
+.pub-cache/
 
-# Flutter
-frontend/.dart_tool/
+# ── 构建产物 ──
+backend/dist/
+backend/www/
 frontend/build/
+frontend/.dart_tool/
 frontend/.flutter-plugins*
 frontend/android/.gradle/
 frontend/ios/Pods/
+frontend/macos/Pods/
 
-# 后端构建产物
-backend/dist/
+# ── 敏感配置 ──
+.env
+*.pem
+*.key
+*.p12
+
+# ── 系统文件 ──
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+
+# ── IDE ──
+.idea/
+.vscode/
+*.iml
+
+# ── 上传文件 ──
+backend/uploads/

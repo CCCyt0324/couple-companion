@@ -15,7 +15,6 @@ class MoreScreen extends StatelessWidget {
     _MoreItem('心愿纸条', '悄悄话与愿望', 'W', '/wish'),
     _MoreItem('共享相册', '相册与评论', 'P', '/album'),
     _MoreItem('情侣游戏', '创建房间与答题', 'G', '/games'),
-    _MoreItem('两人地图', '位置共享', 'L', '/map'),
     _MoreItem('设置', '资料与偏好设置', 'C', '/settings'),
   ];
 

@@ -11,9 +11,11 @@ class ApiConstants {
   static String get registerEmail => '$baseUrl/auth/register/email';
   static String get sendSms => '$baseUrl/auth/sms/send';
 
-  // Room
+  // Room（免登录，用 x-user-id 头识别）
+  static String get roomStart => '$baseUrl/room/start';
   static String get myRoom => '$baseUrl/room';
   static String get joinRoom => '$baseUrl/room/join';
+  static String get leaveRoom => '$baseUrl/room/leave';
   static String get userProfile => '$baseUrl/user/profile';
 
   // Greeting
@@ -57,6 +59,8 @@ class ApiConstants {
 
   // Status
   static String get statusMine => '$baseUrl/status/mine';
+  static String get statusPartner => '$baseUrl/status/partner';
+  static String get statusInteractions => '$baseUrl/status/interactions';
   static String get status => '$baseUrl/status';
 
   // Games
@@ -67,13 +71,4 @@ class ApiConstants {
   // Butler
   static String get butlerAdvice => '$baseUrl/butler/advice';
   static String get butlerChat => '$baseUrl/butler/chat';
-
-  // Map
-  static String get mapLocation => '$baseUrl/map/location';
-  static String get mapLocations => '$baseUrl/map/locations';
-  static String get mapShareStatus => '$baseUrl/map/share-status';
-
-  // Location（无需登录）
-  static String get location => '$baseUrl/location';
-  static String get locationGeocode => '$baseUrl/location/geocode';
 }

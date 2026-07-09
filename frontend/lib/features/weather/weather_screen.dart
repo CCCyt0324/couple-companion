@@ -25,18 +25,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   Future<void> _autoLocate() async {
-    setState(() => _loading = true);
-    try {
-      final locRes = await apiService.get(ApiConstants.location);
-      final loc = apiService.unwrap(locRes.data) as Map<String, dynamic>;
-      final city = loc['city'] as String? ?? '北京';
-      _cityName = city;
-      _cityCtrl.text = city;
-      _fetch(city: city);
-    } catch (_) {
-      _cityCtrl.text = '北京';
-      _fetch(city: '北京');
-    }
+    _cityCtrl.text = '北京';
+    _fetch(city: '北京');
   }
 
   @override

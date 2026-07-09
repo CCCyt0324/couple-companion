@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Delete, Put, Body, Param, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { HabitService } from './habit.service';
 import { RoomService } from '../room/room.service';
 
 @Controller('habit')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class HabitController {
   constructor(
     private habitService: HabitService,

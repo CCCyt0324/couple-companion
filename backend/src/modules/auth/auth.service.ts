@@ -56,16 +56,8 @@ export class AuthService {
     const user = this.userRepo.create({ phone, email, wechatOpenid, nickname, passwordHash });
     await this.userRepo.save(user);
 
-    // 创建或加入房间
-    let room: Room | null = null;
-    try {
-      room = await this.roomService.setupRoom(user.id, roomCode, nickname);
-    } catch (e) {
-      // 房间码无效时仍正常注册，后续可再加入
-    }
-
     const token = this.jwtService.sign({ sub: user.id, nickname: user.nickname });
-    return { token, user, room };
+    return { token, user };
   }
 
   async phoneLogin(dto: PhoneLoginDto): Promise<RegisterResultDto> {
@@ -75,7 +67,7 @@ export class AuthService {
     if (!valid) throw new UnauthorizedException('密码错误');
     const token = this.jwtService.sign({ sub: user.id, nickname: user.nickname });
     const room = await this.roomService.getUserRoom(user.id);
-    return { token, user, room };
+    return { token, user };
   }
 
   async emailLogin(email: string, password: string): Promise<RegisterResultDto> {
@@ -85,6 +77,6 @@ export class AuthService {
     if (!valid) throw new UnauthorizedException('密码错误');
     const token = this.jwtService.sign({ sub: user.id, nickname: user.nickname });
     const room = await this.roomService.getUserRoom(user.id);
-    return { token, user, room };
+    return { token, user };
   }
 }

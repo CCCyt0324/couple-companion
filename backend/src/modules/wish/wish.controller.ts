@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { WishService } from './wish.service';
 import { RoomService } from '../room/room.service';
 
 @Controller('wish')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class WishController {
   constructor(
     private wishService: WishService,

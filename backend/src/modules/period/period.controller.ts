@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Put, Body, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { OptionalAuthGuard } from '../../common/guards/optional-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { PeriodService } from './period.service';
 
 @Controller('period')
-@UseGuards(JwtAuthGuard)
+@UseGuards(OptionalAuthGuard)
 export class PeriodController {
   constructor(private periodService: PeriodService) {}
 

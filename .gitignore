@@ -12,5 +12,4 @@ frontend/android/.gradle/
 frontend/ios/Pods/
 
 # 后端构建产物
-backend/www/
 backend/dist/
